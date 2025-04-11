@@ -17,8 +17,8 @@ def run_comm(command, path):
 	
 
 def get_data(meta_name, N):
-	# file_path = f"Run33_fast/meta_output/{meta_name}/output_data/r_out-{N:04d}.dat"
-	file_path = f"../meta_output/{meta_name}/output_data/r_out-{N:04d}.dat"
+	file_path = f"Run33_fast/meta_output/{meta_name}/output_data/r_out-{N:04d}.dat"
+	# file_path = f"../meta_output/{meta_name}/output_data/r_out-{N:04d}.dat"
 	
 	with open(file_path) as f:
 		f.readline()
@@ -115,7 +115,8 @@ for sca in ["no", "yes"]:
 
 		plt.title(f"p = {p0}, fracSi = {frac10}, sca = {sca}")
 		bbox = dict(boxstyle="round", fc="white", ec="gray", alpha=0.6)
-		txt = f"Time = {(df0["time[yr]"][t_slice-1]):6.2f} yr\nTime slice: {t_slice:04d}"
+		x = df0["time[yr]"][t_slice-1]
+		txt = f"Time = {x:6.2f} yr\nTime slice: {t_slice:04d}"
 		ax.text(0.02, 0.03, txt, va="bottom", ha="left", transform=ax.transAxes, alpha=0, bbox=bbox, rasterized=True)
 		ax.text(0.02, 0.03, txt, va="bottom", ha="left", transform=ax.transAxes)
 
@@ -148,7 +149,8 @@ for sca in ["no", "yes"]:
 
 		plt.title(f"p = {p0}, amax = {amax0_micron} $\mu$m, sca = {sca}")
 		bbox = dict(boxstyle="round", fc="white", ec="gray", alpha=0.6)
-		txt = f"Time = {(df0["time[yr]"][t_slice-1]):6.2f} yr\nTime slice: {t_slice:04d}"
+		x = df0["time[yr]"][t_slice-1]
+		txt = f"Time = {x:6.2f} yr\nTime slice: {t_slice:04d}"
 		ax.text(0.02, 0.03, txt, va="bottom", ha="left", transform=ax.transAxes, alpha=0, bbox=bbox, rasterized=True)
 		ax.text(0.02, 0.03, txt, va="bottom", ha="left", transform=ax.transAxes)
 
@@ -181,7 +183,8 @@ for sca in ["no", "yes"]:
 
 		plt.title(f"fracSi = {frac10}, amax = {amax0_micron} $\mu$m, sca = {sca}")
 		bbox = dict(boxstyle="round", fc="white", ec="gray", alpha=0.6)
-		txt = f"Time = {(df0["time[yr]"][t_slice-1]):6.2f} yr\nTime slice: {t_slice:04d}"
+		x = df0["time[yr]"][t_slice-1]
+		txt = f"Time = {x:6.2f} yr\nTime slice: {t_slice:04d}"
 		ax.text(0.02, 0.03, txt, va="bottom", ha="left", transform=ax.transAxes, alpha=0, bbox=bbox, rasterized=True)
 		ax.text(0.02, 0.03, txt, va="bottom", ha="left", transform=ax.transAxes)
 
