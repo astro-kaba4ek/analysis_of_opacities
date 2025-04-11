@@ -112,7 +112,10 @@ for sca in ["no", "yes"]:
 
 		plt.title(f"p = {p0}, fracSi = {frac10}, sca = {sca}")
 		bbox = dict(boxstyle="round", fc="white", ec="gray", alpha=0.6)
-		x = df0["time[yr]"][int(t_slice)-1]
+		if int(t_slice) == 0:
+			x = df0["time[yr]"][int(t_slice)]
+		else:
+			x = df0["time[yr]"][int(t_slice)-1]
 		txt = f"Time = {x:6.2f} yr\nTime slice: {t_slice}"
 		ax.text(0.02, 0.03, txt, va="bottom", ha="left", transform=ax.transAxes, alpha=0, bbox=bbox, rasterized=True)
 		ax.text(0.02, 0.03, txt, va="bottom", ha="left", transform=ax.transAxes)
@@ -146,7 +149,10 @@ for sca in ["no", "yes"]:
 
 		plt.title(f"p = {p0}, amax = {amax0_micron} $\mu$m, sca = {sca}")
 		bbox = dict(boxstyle="round", fc="white", ec="gray", alpha=0.6)
-		x = df0["time[yr]"][int(t_slice)-1]
+		if int(t_slice) == 0:
+			x = df0["time[yr]"][int(t_slice)]
+		else:
+			x = df0["time[yr]"][int(t_slice)-1]
 		txt = f"Time = {x:6.2f} yr\nTime slice: {t_slice}"
 		ax.text(0.02, 0.03, txt, va="bottom", ha="left", transform=ax.transAxes, alpha=0, bbox=bbox, rasterized=True)
 		ax.text(0.02, 0.03, txt, va="bottom", ha="left", transform=ax.transAxes)
@@ -180,7 +186,10 @@ for sca in ["no", "yes"]:
 
 		plt.title(f"fracSi = {frac10}, amax = {amax0_micron} $\mu$m, sca = {sca}")
 		bbox = dict(boxstyle="round", fc="white", ec="gray", alpha=0.6)
-		x = df0["time[yr]"][int(t_slice)-1]
+		if int(t_slice) == 0:
+			x = df0["time[yr]"][int(t_slice)]
+		else:
+			x = df0["time[yr]"][int(t_slice)-1]
 		txt = f"Time = {x:6.2f} yr\nTime slice: {t_slice}"
 		ax.text(0.02, 0.03, txt, va="bottom", ha="left", transform=ax.transAxes, alpha=0, bbox=bbox, rasterized=True)
 		ax.text(0.02, 0.03, txt, va="bottom", ha="left", transform=ax.transAxes)
