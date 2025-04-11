@@ -17,8 +17,8 @@ def run_comm(command, path):
 	
 
 def get_data(meta_name, N):
-	file_path = f"Run33_fast/meta_output/{meta_name}/output_data/r_out-{N:04d}.dat"
-	# file_path = f"../meta_output/{meta_name}/output_data/r_out-{N:04d}.dat"
+	# file_path = f"Run33_fast/meta_output/{meta_name}/output_data/r_out-{N:04d}.dat"
+	file_path = f"../meta_output/{meta_name}/output_data/r_out-{N:04d}.dat"
 	
 	with open(file_path) as f:
 		f.readline()
