@@ -95,7 +95,7 @@ for sca in ["no", "yes"]:
 	for t_slice in time_slices:
 		plt.figure(figsize=(12,10))
 		ax = plt.subplot(111)
-			
+
 		for i, amax_micron in enumerate(np.sort(np.append(amax_arr_micron, amax0_micron))):
 			meta_name = f"p{p0}f{frac10}amax{amax_micron}sca{sca}"
 
@@ -113,7 +113,7 @@ for sca in ["no", "yes"]:
 		plt.title(f"p = {p0}, fracSi = {frac10}, sca = {sca}")
 		bbox = dict(boxstyle="round", fc="white", ec="gray", alpha=0.6)
 		if int(t_slice) == 0:
-			x = df0["time[yr]"][int(t_slice)]
+			x = df0["time[yr]"][0]
 		else:
 			x = df0["time[yr]"][int(t_slice)-1]
 		txt = f"Time = {x:6.2f} yr\nTime slice: {t_slice}"
@@ -150,7 +150,7 @@ for sca in ["no", "yes"]:
 		plt.title(f"p = {p0}, amax = {amax0_micron} $\mu$m, sca = {sca}")
 		bbox = dict(boxstyle="round", fc="white", ec="gray", alpha=0.6)
 		if int(t_slice) == 0:
-			x = df0["time[yr]"][int(t_slice)]
+			x = df0["time[yr]"][0]
 		else:
 			x = df0["time[yr]"][int(t_slice)-1]
 		txt = f"Time = {x:6.2f} yr\nTime slice: {t_slice}"
@@ -187,7 +187,7 @@ for sca in ["no", "yes"]:
 		plt.title(f"fracSi = {frac10}, amax = {amax0_micron} $\mu$m, sca = {sca}")
 		bbox = dict(boxstyle="round", fc="white", ec="gray", alpha=0.6)
 		if int(t_slice) == 0:
-			x = df0["time[yr]"][int(t_slice)]
+			x = df0["time[yr]"][0]
 		else:
 			x = df0["time[yr]"][int(t_slice)-1]
 		txt = f"Time = {x:6.2f} yr\nTime slice: {t_slice}"

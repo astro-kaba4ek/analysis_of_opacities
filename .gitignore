@@ -2,3 +2,7 @@ Run33_fast
 flux_from_time
 SED
 Tmid_from_R
+kappaPR_from_T
+kappaNu_from_lambda
+tauPR_from_R
+tHC_from_R
