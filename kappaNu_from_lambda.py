@@ -87,7 +87,7 @@ run_comm(f"mkdir {name}", pwd_path)
 res = "./" + name
 
 
-plt.rcParams.update({'font.size': 20})
+plt.rcParams.update({'font.size': 30})
 
 
 for sca in ["yes"]:

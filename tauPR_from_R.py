@@ -25,8 +25,8 @@ def Sigma_g(R, Sigma0, gama, R_in, R_out):
 
 
 def Tmid_from_R(meta_name, N):
-	# file_path = f"Run33_fast/meta_output/{meta_name}/output_data/r_out-{N:04d}.dat"
-	file_path = f"../meta_output/{meta_name}/output_data/r_out-{N:04d}.dat"
+	file_path = f"Run33_fast/meta_output/{meta_name}/output_data/r_out-{N:04d}.dat"
+	# file_path = f"../meta_output/{meta_name}/output_data/r_out-{N:04d}.dat"
 
 	with open(file_path) as input_file:
 		time = [next(input_file) for _ in range(2)][1].split()[1]
@@ -45,13 +45,13 @@ def Tmid_from_R(meta_name, N):
 	return T, R
 
 
-def tau(name, R, T, f_d, Sigma0, gama, R_in, R_out):
+def tau(name, R, T, Sigma0, gama, R_in, R_out):
 
-	# df = pd.read_table(f"../input_opacities/opacity_PR_{name}.txt", sep="\s+", comment="#")
-	df = pd.read_table(f"../input_opacities/opacity_PR_{name}.txt", sep="\s+", skiprows=6, names=["temperature[K]", "kappa_P[cm2/g]", "kappa_R[cm2/g]", "kappa_S[cm2/g]"])
+	df = pd.read_table(f"../input_opacities/opacity_PR_{name}.txt", sep="\s+", comment="#")
+	# df = pd.read_table(f"../input_opacities/opacity_PR_{name}.txt", sep="\s+", skiprows=6, names=["temperature[K]", "kappa_P[cm2/g]", "kappa_R[cm2/g]", "kappa_S[cm2/g]"])
 
-	y_interp_P = scipy.interpolate.interp1d(df["temperature[K]"], df["kappa_P[cm2/g]"]/f_d)
-	y_interp_R = scipy.interpolate.interp1d(df["temperature[K]"], df["kappa_R[cm2/g]"]/f_d)
+	y_interp_P = scipy.interpolate.interp1d(df["temperature[K]"], df["kappa_P[cm2/g]"])
+	y_interp_R = scipy.interpolate.interp1d(df["temperature[K]"], df["kappa_R[cm2/g]"])
 
 	kappaP_arr = np.empty(len(T))
 	kappaR_arr = np.empty(len(T))
@@ -63,14 +63,14 @@ def tau(name, R, T, f_d, Sigma0, gama, R_in, R_out):
 
 	Sigma_gas = Sigma_g(R, Sigma0, gama, R_in, R_out) / 2
 	
-	tauP = f_d * Sigma_gas * kappaP_arr
-	tauR = f_d * Sigma_gas * kappaR_arr
+	tauP = Sigma_gas * kappaP_arr
+	tauR = Sigma_gas * kappaR_arr
 
 	return tauP, tauR
 
 
 def set_ax(ax):
-	ax.set_xlabel(r"R [au]")
+	ax.set_xlabel(r"$R$ [au]")
 	ax.set_ylabel(r"$\tau_{\rm P}, \tau_{\rm R}$")
 	ax.set_xlim(4e-2,1e2)
 	ax.set_ylim(1e-1,5e3)
@@ -136,7 +136,7 @@ res = "./" + name
 # print(Mgas, Mgas0, Mgas/Mgas0)
 Sigma0 = 101.11
 
-plt.rcParams.update({'font.size': 20})
+plt.rcParams.update({'font.size': 30})
 
 
 for sca in ["no", "yes"]:
@@ -153,7 +153,7 @@ for sca in ["no", "yes"]:
 		# if amax_micron == amax0_micron: k = i
 
 		T0, R0 = Tmid_from_R(meta_name, 49)
-		tauP, tauR = tau(meta_name, R0, T0, 0.01, Sigma0, 1, 1, 11)
+		tauP, tauR = tau(meta_name, R0, T0, Sigma0, 1, 1, 11)
 
 		if amax_micron == amax0_micron:
 			ax.plot(R0, tauP, "-", color=f"C{i}", label=rf"$\mathbf{{a_{{max}} = {amax_micron}\ \mu m}}$")
@@ -191,7 +191,7 @@ for sca in ["no", "yes"]:
 		# if frac1 == frac10: k = i
 
 		T0, R0 = Tmid_from_R(meta_name, 49)
-		tauP, tauR = tau(meta_name, R0, T0, 0.01, Sigma0, 1, 1, 11)
+		tauP, tauR = tau(meta_name, R0, T0, Sigma0, 1, 1, 11)
 
 		if frac1 == frac10:
 			ax.plot(R0, tauP, "-", color=f"C{i}", label=rf"$\mathbf{{f_{{Si}} = {frac1}}}$")
@@ -229,7 +229,7 @@ for sca in ["no", "yes"]:
 		# if p == p0: k = i
 
 		T0, R0 = Tmid_from_R(meta_name, 49)
-		tauP, tauR = tau(meta_name, R0, T0, 0.01, Sigma0, 1, 1, 11)
+		tauP, tauR = tau(meta_name, R0, T0, Sigma0, 1, 1, 11)
 
 		if p == p0:
 			ax.plot(R0, tauP, "-", color=f"C{i}", label=rf"$\mathbf{{p = {p}}}$")

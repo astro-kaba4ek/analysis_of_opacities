@@ -171,7 +171,7 @@ res = "./" + name
 # print(Mgas, Mgas0, Mgas/Mgas0)
 Sigma0 = 101.11
 
-plt.rcParams.update({'font.size': 20})
+plt.rcParams.update({'font.size': 30})
 
 
 for sca in ["no", "yes"]:

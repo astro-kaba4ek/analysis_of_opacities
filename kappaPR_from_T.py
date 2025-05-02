@@ -142,7 +142,7 @@ run_comm(f"mkdir {name}", pwd_path)
 res = "./" + name
 
 
-plt.rcParams.update({'font.size': 20})
+plt.rcParams.update({'font.size': 30})
 
 
 for sca in ["no", "yes"]:
@@ -271,7 +271,7 @@ for sca in ["no", "yes"]:
 # with open("../meta_names0.txt") as f:
 # 	meta_names = f.readlines()
 
-# plt.rcParams.update({'font.size': 20})
+# plt.rcParams.update({'font.size': 30})
 
 # pdf = PdfPages(f"kappaPR_from_T.pdf")
 

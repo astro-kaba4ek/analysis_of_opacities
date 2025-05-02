@@ -97,7 +97,7 @@ df0 = pd.read_table("../hurakan/flare_profile_FUOri.inp", sep="\s+")
 for sca in ["no", "yes"]:
 # for sca in ["no"]:
 
-	plt.rcParams.update({'font.size': 20})
+	plt.rcParams.update({'font.size': 30})
 
 	pdf = PdfPages(f"{res}/Tmid_from_R_amax_sca{sca}.pdf")
 

@@ -96,7 +96,7 @@ time_slices = sorted(os.listdir(f"../meta_output/p{p0}f{frac10}amax{amax0_micron
 for sca in ["no", "yes"]:
 # for sca in ["no"]:
 
-	plt.rcParams.update({'font.size': 20})
+	plt.rcParams.update({'font.size': 30})
 
 	pdf = PdfPages(f"{res}/SED_amax_sca{sca}.pdf")
 
