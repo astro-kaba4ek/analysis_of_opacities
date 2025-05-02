@@ -83,7 +83,7 @@ def tau(name, R, Tbase, Tmax, f_d, Sigma0, gama, R_in, R_out):
 
 
 def set_ax(ax):
-	ax.set_xlabel(r"R [au]")
+	ax.set_xlabel(r"$R$ [au]")
 	ax.set_ylabel(r"time [yr]")
 	ax.set_xlim(1e-1,2e2)
 	ax.set_ylim(1e-5,1e1)
