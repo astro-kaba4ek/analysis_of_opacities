@@ -25,8 +25,8 @@ def Sigma_g(R, Sigma0, gama, R_in, R_out):
 
 
 def Tmid_from_R(meta_name, N):
-	file_path = f"Run33_fast/meta_output/{meta_name}/output_data/r_out-{N:04d}.dat"
-	# file_path = f"../meta_output/{meta_name}/output_data/r_out-{N:04d}.dat"
+	# file_path = f"Run33_fast/meta_output/{meta_name}/output_data/r_out-{N:04d}.dat"
+	file_path = f"../meta_output/{meta_name}/output_data/r_out-{N:04d}.dat"
 
 	with open(file_path) as input_file:
 		time = [next(input_file) for _ in range(2)][1].split()[1]
@@ -47,8 +47,8 @@ def Tmid_from_R(meta_name, N):
 
 def tau(name, R, T, Sigma0, gama, R_in, R_out):
 
-	df = pd.read_table(f"../input_opacities/opacity_PR_{name}.txt", sep="\s+", comment="#")
-	# df = pd.read_table(f"../input_opacities/opacity_PR_{name}.txt", sep="\s+", skiprows=6, names=["temperature[K]", "kappa_P[cm2/g]", "kappa_R[cm2/g]", "kappa_S[cm2/g]"])
+	# df = pd.read_table(f"../input_opacities/opacity_PR_{name}.txt", sep="\s+", comment="#")
+	df = pd.read_table(f"../input_opacities/opacity_PR_{name}.txt", sep="\s+", skiprows=6, names=["temperature[K]", "kappa_P[cm2/g]", "kappa_R[cm2/g]", "kappa_S[cm2/g]"])
 
 	y_interp_P = scipy.interpolate.interp1d(df["temperature[K]"], df["kappa_P[cm2/g]"])
 	y_interp_R = scipy.interpolate.interp1d(df["temperature[K]"], df["kappa_R[cm2/g]"])
