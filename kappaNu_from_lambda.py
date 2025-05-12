@@ -24,8 +24,7 @@ def get_data(name):
 
 def set_ax(ax):
 	ax.set_xlabel(r"$\lambda$ [cm]")
-	ax.set_ylabel(r"$\varkappa_\nu^{\rm abs}, \varkappa_\nu^{\rm sca}$ [cm$^2$ g$_{\rm dust}^{-1}$]")
-	# ax.set_ylabel(r"$\varkappa_\nu, \sigma_\nu$ [cm$^2$ g$^{-1}$]")
+	ax.set_ylabel(r"$\varkappa_\nu^{\rm abs},\ \varkappa_\nu^{\rm sca}$ [cm$^2$ g$_{\rm dust}^{-1}$]")
 	ax.set_xlim(9e-6,1e0)
 	ax.set_ylim(1e-2,1e5)
 	ax.tick_params(direction='in', which='both', pad=10, width=2, length=5)
@@ -87,7 +86,7 @@ run_comm(f"mkdir {name}", pwd_path)
 res = "./" + name
 
 
-plt.rcParams.update({'font.size': 30})
+plt.rcParams.update({'font.size': 20})
 
 
 for sca in ["yes"]:
@@ -100,22 +99,17 @@ for sca in ["yes"]:
 	for i, amax_micron in enumerate(np.sort(np.append(amax_arr_micron, amax0_micron))):
 		meta_name = f"p{p0}f{frac10}amax{amax_micron}sca{sca}"
 
-		# if amax_micron == amax0_micron: k = i
-
 		lambd, kappa, sigma = get_data(meta_name)
 
 		if amax_micron == amax0_micron:
 			ax.plot(lambd, kappa, "-", color=f"C{i}", label=rf"$\mathbf{{a_{{max}} = {amax_micron}\ \mu m}}$")
 		else: 
 			ax.plot(lambd, kappa, "-", color=f"C{i}", label=rf"$a_{{\rm max}} = {amax_micron}\ \mu \rm m$")
-		# ax.plot(lambd, kappa, "-", color=f"C{i}",  label=r"a$_{\rm max} =$"+f"{amax_micron} $\mu$m")
 		ax.plot(lambd, sigma, "--", color=f"C{i}")
 
 	texts = set_ax(ax)
-	# texts[k].set_weight("bold")
 
 	plt.title(rf"$p = {p0},\ f_{{\rm Si}} = {frac10}$")
-	# add_text(ax)
 	add_legend2(ax)
 
 	plt.tight_layout()
@@ -133,22 +127,17 @@ for sca in ["yes"]:
 	for i, frac1 in enumerate(np.sort(np.append(frac1_arr, frac10))):
 		meta_name = f"p{p0}f{frac1}amax{amax0_micron}sca{sca}"
 
-		# if frac1 == frac10: k = i
-
 		lambd, kappa, sigma = get_data(meta_name)
 
 		if frac1 == frac10:
 			ax.plot(lambd, kappa, "-", color=f"C{i}", label=rf"$\mathbf{{f_{{Si}} = {frac1}}}$")
 		else:
 			ax.plot(lambd, kappa, "-", color=f"C{i}", label=rf"$f_{{\rm Si}} = {frac1}$")
-		# ax.plot(lambd, kappa, "-", color=f"C{i}", label=r"frac$_{\rm Si} =$"+f"{frac1}")
 		ax.plot(lambd, sigma, "--", color=f"C{i}")
 
 	texts = set_ax(ax)
-	# texts[k].set_weight("bold")
 
 	plt.title(rf"$p = {p0},\ a_{{\rm max}} = {amax0_micron}\ \mu \rm m$")
-	# add_text(ax)
 	add_legend2(ax)
 
 	plt.tight_layout()
@@ -166,23 +155,17 @@ for sca in ["yes"]:
 	for i, p in enumerate(np.sort(np.append(p_arr, p0))):
 		meta_name = f"p{p}f{frac10}amax{amax0_micron}sca{sca}"
 
-		# if p == p0: k = i
-
 		lambd, kappa, sigma = get_data(meta_name)
 
 		if p == p0:
 			ax.plot(lambd, kappa, "-", color=f"C{i}", label=rf"$\mathbf{{p = {p}}}$")
 		else:
 			ax.plot(lambd, kappa, "-", color=f"C{i}", label=rf"$p = {p}$")
-		# ax.plot(lambd, kappa, "-", color=f"C{i}", label=f"p = {p}")
 		ax.plot(lambd, sigma, "--", color=f"C{i}")
 
 	texts = set_ax(ax)
-	# texts[k].set_weight("bold")
 
-	# plt.title(f"fracSi = {frac10}, amax = {amax0_micron} $\mu$m")
 	plt.title(rf"$f_{{\rm Si}} = {frac10},\ a_{{\rm max}} = {amax0_micron}\ \mu \rm m$")
-	# add_text(ax)
 	add_legend2(ax)
 
 	plt.tight_layout()

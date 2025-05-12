@@ -25,7 +25,6 @@ def Sigma_g(R, Sigma0, gama, R_in, R_out):
 
 
 def Tmid_from_R(meta_name, N):
-	# file_path = f"Run33_fast/meta_output/{meta_name}/output_data/r_out-{N:04d}.dat"
 	file_path = f"../meta_output/{meta_name}/output_data/r_out-{N:04d}.dat"
 
 	with open(file_path) as input_file:
@@ -45,7 +44,7 @@ def Tmid_from_R(meta_name, N):
 	return T, R
 
 
-def tau(name, R, Tbase, Tmax, f_d, Sigma0, gama, R_in, R_out):
+def tHC(name, R, Tbase, Tmax, f_d, Sigma0, gama, R_in, R_out):
 
 	# df = pd.read_table(f"../input_opacities/opacity_PR_{name}.txt", sep="\s+", comment="#")
 	df = pd.read_table(f"../input_opacities/opacity_PR_{name}.txt", sep="\s+", skiprows=6, names=["temperature[K]", "kappa_P[cm2/g]", "kappa_R[cm2/g]", "kappa_S[cm2/g]"])
@@ -126,8 +125,8 @@ AU = 1.495978707e13
 mu = 0.05
 SBc = 5.670367e-5
 kboltz = 1.38064852e-16
-gamma = 7 / 5 
-mmw = 2
+gamma = 5 / 3 # 7 / 5 
+mmw = 2.3 # 2
 amu = 1.660539040e-24
 
 Lsun = 3.828e33
@@ -171,11 +170,10 @@ res = "./" + name
 # print(Mgas, Mgas0, Mgas/Mgas0)
 Sigma0 = 101.11
 
-plt.rcParams.update({'font.size': 30})
+plt.rcParams.update({'font.size': 20})
 
 
 for sca in ["no", "yes"]:
-# for sca in ["no"]:
 
 	pdf = PdfPages(f"{res}/{name}_amax_sca{sca}.pdf")
 
@@ -185,28 +183,23 @@ for sca in ["no", "yes"]:
 	for i, amax_micron in enumerate(np.sort(np.append(amax_arr_micron, amax0_micron))):
 		meta_name = f"p{p0}f{frac10}amax{amax_micron}sca{sca}"
 
-		# if amax_micron == amax0_micron: k = i
-
 		Tbase, R0 = Tmid_from_R(meta_name, 49)
 		Tmax, _ = Tmid_from_R(meta_name, 66)
-		t_c, t_h = tau(meta_name, R0, Tbase, Tmax, 0.01, Sigma0, 1, 1, 11)
+		t_c, t_h = tHC(meta_name, R0, Tbase, Tmax, 0.01, Sigma0, 1, 1, 11)
 
 		if amax_micron == amax0_micron:
 			ax.plot(R0, t_h, "-", color=f"C{i}", label=rf"$\mathbf{{a_{{max}} = {amax_micron}\ \mu m}}$")
 		else: 
 			ax.plot(R0, t_h, "-", color=f"C{i}", label=rf"$a_{{\rm max}} = {amax_micron}\ \mu \rm m$")
-		# ax.plot(R0, t_h, "-", color=f"C{i}",  label=r"a$_{\rm max} =$"+f"{amax_micron} $\mu$m")
 		ax.plot(R0, t_c, "--", color=f"C{i}")
 
 
 	texts = set_ax(ax)
-	# texts[k].set_weight("bold")
 
 	if sca == "yes":
 		plt.title(rf"$p = {p0},\ f_{{\rm Si}} = {frac10},$ with scattering")
 	elif sca == "no":
 		plt.title(rf"$p = {p0},\ f_{{\rm Si}} = {frac10},$ without scattering")
-	# plt.title(f"p = {p0}, fracSi = {frac10}, sca = {sca}")
 	add_legend2(ax)
 
 	plt.tight_layout()
@@ -224,24 +217,19 @@ for sca in ["no", "yes"]:
 	for i, frac1 in enumerate(np.sort(np.append(frac1_arr, frac10))):
 		meta_name = f"p{p0}f{frac1}amax{amax0_micron}sca{sca}"
 
-		# if frac1 == frac10: k = i
-
 		Tbase, R0 = Tmid_from_R(meta_name, 49)
 		Tmax, _ = Tmid_from_R(meta_name, 66)
-		t_c, t_h = tau(meta_name, R0, Tbase, Tmax, 0.01, Sigma0, 1, 1, 11)
+		t_c, t_h = tHC(meta_name, R0, Tbase, Tmax, 0.01, Sigma0, 1, 1, 11)
 
 		if frac1 == frac10:
 			ax.plot(R0, t_h, "-", color=f"C{i}", label=rf"$\mathbf{{f_{{Si}} = {frac1}}}$")
 		else:
 			ax.plot(R0, t_h, "-", color=f"C{i}", label=rf"$f_{{\rm Si}} = {frac1}$")
-		# ax.plot(R0, t_h, "-", color=f"C{i}", label=r"frac$_{\rm Si} =$"+f"{frac1}")
 		ax.plot(R0, t_c, "--", color=f"C{i}")
 
 
 	texts = set_ax(ax)
-	# texts[k].set_weight("bold")
 
-	# plt.title(f"p = {p0}, amax = {amax0_micron} $\mu$m, sca = {sca}")
 	if sca == "yes":
 		plt.title(rf"$p = {p0},\ a_{{\rm max}} = {amax0_micron}\ \mu \rm m,$ with scattering")
 	elif sca == "no":
@@ -263,24 +251,19 @@ for sca in ["no", "yes"]:
 	for i, p in enumerate(np.sort(np.append(p_arr, p0))):
 		meta_name = f"p{p}f{frac10}amax{amax0_micron}sca{sca}"
 
-		# if p == p0: k = i
-
 		Tbase, R0 = Tmid_from_R(meta_name, 49)
 		Tmax, _ = Tmid_from_R(meta_name, 66)
-		t_c, t_h = tau(meta_name, R0, Tbase, Tmax, 0.01, Sigma0, 1, 1, 11)
+		t_c, t_h = tHC(meta_name, R0, Tbase, Tmax, 0.01, Sigma0, 1, 1, 11)
 
 		if p == p0:
 			ax.plot(R0, t_h, "-", color=f"C{i}", label=rf"$\mathbf{{p = {p}}}$")
 		else:
 			ax.plot(R0, t_h, "-", color=f"C{i}", label=rf"$p = {p}$")
-		# ax.plot(R0, t_h, "-", color=f"C{i}", label=f"p = {p}")
 		ax.plot(R0, t_c, "--", color=f"C{i}")
 
 
 	texts = set_ax(ax)
-	# texts[k].set_weight("bold")
 
-	# plt.title(f"fracSi = {frac10}, amax = {amax0_micron} $\mu$m, sca = {sca}")
 	if sca == "yes":
 		plt.title(rf"$f_{{\rm Si}} = {frac10},\ a_{{\rm max}} = {amax0_micron}\ \mu \rm m,$ with scattering")
 	elif sca == "no":

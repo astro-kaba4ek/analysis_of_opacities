@@ -25,7 +25,6 @@ def Sigma_g(R, Sigma0, gama, R_in, R_out):
 
 
 def Tmid_from_R(meta_name, N):
-	# file_path = f"Run33_fast/meta_output/{meta_name}/output_data/r_out-{N:04d}.dat"
 	file_path = f"../meta_output/{meta_name}/output_data/r_out-{N:04d}.dat"
 
 	with open(file_path) as input_file:
@@ -71,7 +70,7 @@ def tau(name, R, T, Sigma0, gama, R_in, R_out):
 
 def set_ax(ax):
 	ax.set_xlabel(r"$R$ [au]")
-	ax.set_ylabel(r"$\tau_{\rm P}, \tau_{\rm R}$")
+	ax.set_ylabel(r"$\tau_{\rm P},\ \tau_{\rm R}$")
 	ax.set_xlim(4e-2,1e2)
 	ax.set_ylim(1e-1,5e3)
 	ax.tick_params(direction='in', which='both', pad=10, width=2, length=5)
@@ -136,11 +135,10 @@ res = "./" + name
 # print(Mgas, Mgas0, Mgas/Mgas0)
 Sigma0 = 101.11
 
-plt.rcParams.update({'font.size': 30})
+plt.rcParams.update({'font.size': 20})
 
 
 for sca in ["no", "yes"]:
-# for sca in ["no"]:
 
 	pdf = PdfPages(f"{res}/{name}_amax_sca{sca}.pdf")
 
@@ -150,8 +148,6 @@ for sca in ["no", "yes"]:
 	for i, amax_micron in enumerate(np.sort(np.append(amax_arr_micron, amax0_micron))):
 		meta_name = f"p{p0}f{frac10}amax{amax_micron}sca{sca}"
 
-		# if amax_micron == amax0_micron: k = i
-
 		T0, R0 = Tmid_from_R(meta_name, 49)
 		tauP, tauR = tau(meta_name, R0, T0, Sigma0, 1, 1, 11)
 
@@ -159,14 +155,11 @@ for sca in ["no", "yes"]:
 			ax.plot(R0, tauP, "-", color=f"C{i}", label=rf"$\mathbf{{a_{{max}} = {amax_micron}\ \mu m}}$")
 		else: 
 			ax.plot(R0, tauP, "-", color=f"C{i}", label=rf"$a_{{\rm max}} = {amax_micron}\ \mu \rm m$")
-		# ax.plot(R0, tauP, "-", color=f"C{i}",  label=r"a$_{\rm max} =$"+f"{amax_micron} $\mu$m")
 		ax.plot(R0, tauR, "--", color=f"C{i}")
 
 
 	texts = set_ax(ax)
-	# texts[k].set_weight("bold")
 
-	# plt.title(f"p = {p0}, fracSi = {frac10}, sca = {sca}")
 	if sca == "yes":
 		plt.title(rf"$p = {p0},\ f_{{\rm Si}} = {frac10},$ with scattering")
 	elif sca == "no":
@@ -188,8 +181,6 @@ for sca in ["no", "yes"]:
 	for i, frac1 in enumerate(np.sort(np.append(frac1_arr, frac10))):
 		meta_name = f"p{p0}f{frac1}amax{amax0_micron}sca{sca}"
 
-		# if frac1 == frac10: k = i
-
 		T0, R0 = Tmid_from_R(meta_name, 49)
 		tauP, tauR = tau(meta_name, R0, T0, Sigma0, 1, 1, 11)
 
@@ -197,14 +188,11 @@ for sca in ["no", "yes"]:
 			ax.plot(R0, tauP, "-", color=f"C{i}", label=rf"$\mathbf{{f_{{Si}} = {frac1}}}$")
 		else:
 			ax.plot(R0, tauP, "-", color=f"C{i}", label=rf"$f_{{\rm Si}} = {frac1}$")
-		# ax.plot(R0, tauP, "-", color=f"C{i}", label=r"frac$_{\rm Si} =$"+f"{frac1}")
 		ax.plot(R0, tauR, "--", color=f"C{i}")
 
 
 	texts = set_ax(ax)
-	# texts[k].set_weight("bold")
 
-	# plt.title(f"p = {p0}, amax = {amax0_micron} $\mu$m, sca = {sca}")
 	if sca == "yes":
 		plt.title(rf"$p = {p0},\ a_{{\rm max}} = {amax0_micron}\ \mu \rm m,$ with scattering")
 	elif sca == "no":
@@ -226,8 +214,6 @@ for sca in ["no", "yes"]:
 	for i, p in enumerate(np.sort(np.append(p_arr, p0))):
 		meta_name = f"p{p}f{frac10}amax{amax0_micron}sca{sca}"
 
-		# if p == p0: k = i
-
 		T0, R0 = Tmid_from_R(meta_name, 49)
 		tauP, tauR = tau(meta_name, R0, T0, Sigma0, 1, 1, 11)
 
@@ -235,14 +221,11 @@ for sca in ["no", "yes"]:
 			ax.plot(R0, tauP, "-", color=f"C{i}", label=rf"$\mathbf{{p = {p}}}$")
 		else:
 			ax.plot(R0, tauP, "-", color=f"C{i}", label=rf"$p = {p}$")
-		# ax.plot(R0, tauP, "-", color=f"C{i}", label=f"p = {p}")
 		ax.plot(R0, tauR, "--", color=f"C{i}")
 
 
 	texts = set_ax(ax)
-	# texts[k].set_weight("bold")
 
-	# plt.title(f"fracSi = {frac10}, amax = {amax0_micron} $\mu$m, sca = {sca}")
 	if sca == "yes":
 		plt.title(rf"$f_{{\rm Si}} = {frac10},\ a_{{\rm max}} = {amax0_micron}\ \mu \rm m,$ with scattering")
 	elif sca == "no":

@@ -19,20 +19,19 @@ def run_comm(command, path):
 def get_data(meta_name, N):
 	dist = 402
 
-	# file_path = f"Run33_fast/meta_output/{meta_name}/output_data/RADMC3D/{N}/SED_HURAKAN.dat"
 	file_path = f"../meta_output/{meta_name}/output_data/RADMC3D/{N}/SED_HURAKAN.dat"
 
 	df = pd.read_table(file_path, skiprows=3, sep="\s+", names=["lambda", "flux"])
-	lambd = np.array(df["lambda"])
-	sed = np.array(df["flux"]) * c_light/lambd/1e-4 / dist**2
+	lambd = np.array(df["lambda"]) * 1e-4
+	sed = np.array(df["flux"]) * c_light/lambd / dist**2
 
 	return lambd, sed
 
 
 def set_ax(ax):
-	ax.set_xlabel(r"$\lambda$ [$\mu$m]")
+	ax.set_xlabel(r"$\lambda$ [cm]")
 	ax.set_ylabel(r"$\nu F_\nu$ [erg s$^{-1}$ cm$^{-2}$]")
-	ax.set_xlim(1e-1,1e4)
+	ax.set_xlim(1e-5,1e0)
 	ax.set_ylim(1e-14,1e-7)
 	ax.tick_params(direction='in', which='both', pad=10, width=2, length=5)
 	ax.tick_params(which='major', length=10)
@@ -89,14 +88,12 @@ df0 = pd.read_table("../hurakan/flare_profile_FUOri.inp", sep="\s+")
 
 
 time_slices = sorted(os.listdir(f"../meta_output/p{p0}f{frac10}amax{amax0_micron}scano/output_data/RADMC3D"))
-# time_slices = sorted(os.listdir("Run33_fast/meta_output/p2.5f0.8amax1.0scano/output_data/RADMC3D"))
 # time_slices = ["0049", "0066", "0080", "0090", "0115", "0150", "0161", "0181"]
 # time_slices = ["0049"]
 
-for sca in ["no", "yes"]:
-# for sca in ["no"]:
+plt.rcParams.update({'font.size': 20})
 
-	plt.rcParams.update({'font.size': 30})
+for sca in ["no", "yes"]:
 
 	pdf = PdfPages(f"{res}/SED_amax_sca{sca}.pdf")
 
@@ -108,22 +105,14 @@ for sca in ["no", "yes"]:
 		for i, amax_micron in enumerate(np.sort(np.append(amax_arr_micron, amax0_micron))):
 			meta_name = f"p{p0}f{frac10}amax{amax_micron}sca{sca}"
 
-			# if amax_micron == amax0_micron: k = i
-
-			try:
-				lambd, sed = get_data(meta_name, t_slice)		
-				if amax_micron == amax0_micron:
-					ax.plot(lambd, sed, label=rf"$\mathbf{{a_{{max}} = {amax_micron}\ \mu m}}$")
-				else: 
-					ax.plot(lambd, sed, label=rf"$a_{{\rm max}} = {amax_micron}\ \mu \rm m$")	
-				# ax.plot(lambd, sed, label=r"a$_{\rm max} =$"+f"{amax_micron} $\mu$m")
-			except:
-				print(f"Cannot create pdf: {meta_name}")
+			lambd, sed = get_data(meta_name, t_slice)		
+			if amax_micron == amax0_micron:
+				ax.plot(lambd, sed, label=rf"$\mathbf{{a_{{max}} = {amax_micron}\ \mu m}}$")
+			else: 
+				ax.plot(lambd, sed, label=rf"$a_{{\rm max}} = {amax_micron}\ \mu \rm m$")	
 
 		texts = set_ax(ax)
-		# texts[k].set_weight("bold")
 
-		# plt.title(f"p = {p0}, fracSi = {frac10}, sca = {sca}")
 		if sca == "yes":
 			plt.title(rf"$p = {p0},\ f_{{\rm Si}} = {frac10},$ with scattering")
 		elif sca == "no":
@@ -146,22 +135,14 @@ for sca in ["no", "yes"]:
 		for i, frac1 in enumerate(np.sort(np.append(frac1_arr, frac10))):
 			meta_name = f"p{p0}f{frac1}amax{amax0_micron}sca{sca}"
 
-			# if frac1 == frac10: k = i
-
-			try:
-				lambd, sed = get_data(meta_name, t_slice)		
-				if frac1 == frac10:
-					ax.plot(lambd, sed, label=rf"$\mathbf{{f_{{Si}} = {frac1}}}$")
-				else:
-					ax.plot(lambd, sed, label=rf"$f_{{\rm Si}} = {frac1}$")	
-				# ax.plot(lambd, sed, label=r"frac$_{\rm Si} =$"+f"{frac1}")
-			except:
-				print(f"Cannot create pdf: {meta_name}")
+			lambd, sed = get_data(meta_name, t_slice)		
+			if frac1 == frac10:
+				ax.plot(lambd, sed, label=rf"$\mathbf{{f_{{Si}} = {frac1}}}$")
+			else:
+				ax.plot(lambd, sed, label=rf"$f_{{\rm Si}} = {frac1}$")	
 
 		texts = set_ax(ax)
-		# texts[k].set_weight("bold")
 
-		# plt.title(f"p = {p0}, amax = {amax0_micron} $\mu$m, sca = {sca}")
 		if sca == "yes":
 			plt.title(rf"$p = {p0},\ a_{{\rm max}} = {amax0_micron}\ \mu \rm m,$ with scattering")
 		elif sca == "no":
@@ -184,22 +165,14 @@ for sca in ["no", "yes"]:
 		for i, p in enumerate(np.sort(np.append(p_arr, p0))):
 			meta_name = f"p{p}f{frac10}amax{amax0_micron}sca{sca}"
 
-			# if p == p0: k = i
-
-			try:
-				lambd, sed = get_data(meta_name, t_slice)	
-				if p == p0:
-					ax.plot(lambd, sed, label=rf"$\mathbf{{p = {p}}}$")
-				else:
-					ax.plot(lambd, sed, label=rf"$p = {p}$")		
-				# ax.plot(lambd, sed, label=f"p = {p}")
-			except:
-				print(f"Cannot create pdf: {meta_name}")
+			lambd, sed = get_data(meta_name, t_slice)	
+			if p == p0:
+				ax.plot(lambd, sed, label=rf"$\mathbf{{p = {p}}}$")
+			else:
+				ax.plot(lambd, sed, label=rf"$p = {p}$")		
 
 		texts = set_ax(ax)
-		# texts[k].set_weight("bold")
 
-		# plt.title(f"fracSi = {frac10}, amax = {amax0_micron} $\mu$m, sca = {sca}")
 		if sca == "yes":
 			plt.title(rf"$f_{{\rm Si}} = {frac10},\ a_{{\rm max}} = {amax0_micron}\ \mu \rm m,$ with scattering")
 		elif sca == "no":
